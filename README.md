@@ -1,79 +1,98 @@
 # 🛡️ AI Government & Exam Form Error Predictor
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
-[![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org)
-[![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
+[![Colab](https://img.shields.io/badge/Jupyter-Colab-orange.svg)](https://colab.research.google.com/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E.svg)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-150458.svg)](https://pandas.pydata.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-blueviolet.svg)](https://seaborn.pydata.org/)
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 
-An intelligent pre-submission risk assessment and anomaly detection engine designed to prevent candidate disqualifications and registration rejections across competitive examinations and government recruitments (e.g., SSC, UPSC, State PSCs, JEE, NEET).
-
----
-
-## 📌 Executive Summary
-
-Every year, millions of applicants register for competitive exams and public sector recruitments. A significant percentage face outright rejection or cancellation during scrutiny and Document Verification (DV) due to clerical errors and oversight:
-
-| Error Category | Common Mistake | Direct Impact |
-| :--- | :--- | :--- |
-| **Missing Certificates** | Omitting OBC-NCL, EWS, PwD, or State Domicile proofs | Loss of reservation quota or immediate cancellation |
-| **Eligibility Mismatch** | Age outside criteria on cutoff date, invalid degree/stream | Scrutiny failure before admit card release |
-| **Media Non-Compliance** | Photo/signature defying aspect ratio, file size, or DPI limits | Rejection by automated upload gates |
-| **Data Inconsistencies** | Name discrepancies across matriculation records vs. ID | Disqualification during final document verification |
-
-This tool functions as a **smart pre-flight checker**: applicants input their profile details, and the hybrid machine learning and rule-based pipeline evaluates inconsistencies, scores rejection probability, and provides actionable remediation steps before final submission.
+*A proactive Machine Learning pre-flight check engine that detects application discrepancies, predicts rejection risk, and flags compliance issues before final exam/job portal submission.*
 
 ---
 
-## 💡 System Architecture
+## 📌 Problem Overview
+
+Every year, millions of students and competitive exam aspirants submit forms for major government recruitment and entrance tests (e.g., UPSC, SSC, State PSCs, JEE, NEET). A massive percentage face automatic disqualification due to avoidable submission errors:
 
 ```text
-┌──────────────────────────┐
-│  Applicant Form Payload  │
-│  (Age, Category, Docs)   │
-└────────────┬─────────────┘
-             │
-             ▼
-┌──────────────────────────┐
-│ Feature Vectorization &  │
-│ Categorical Encoding     │
-└────────────┬─────────────┘
-             │
-             ▼
-┌────────────────────────────────────────────────────────┐
-│               Hybrid Inference Pipeline                │
-│ ┌────────────────────────┐  ┌────────────────────────┐ │
-│ │  Deterministic Rules   │  │   Trained ML Model     │ │
-│ │  (Eligibility Criteria)│  │   (Risk Probability)   │ │
-│ └───────────┬────────────┘  └───────────┬────────────┘ │
-└─────────────┼───────────────────────────┼──────────────┘
-              │                           │
-              └─────────────┬─────────────┘
-                            │
-                            ▼
-              ┌───────────────────────────┐
-              │     Diagnostic Report     │
-              │   • Risk Tier (High/Med)  │
-              │   • Calibrated Score (%)  │
-              │   • Actionable Fixes      │
-              └───────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│                   COMMON APPLICATION REJECTION TRAPS                   │
+├────────────────────────────────────────────────────────────────────────┤
+│  ❌ Document Incompleteness  : Missing mandatory category / quota proof │
+│  ❌ Eligibility Mismatches   : Age limits, board requirements missed   │
+│  ❌ Upload Formatting Errors : Photo/signature resolution & DPI flaws  │
+│  ❌ Deadline & Criteria Lapses: Category validity after cutoff dates   │
+└────────────────────────────────────────────────────────────────────────┘
 
-ML-PROJECT/
-├── data/
-│   ├── raw/                  # Raw simulated form submissions
-│   └── processed/            # Cleaned, vectorized training data
-├── models/
-│   ├── model.pkl             # Serialized inference model
-│   └── preprocessor.pkl      # Column transformers and encoders
-├── notebooks/
-│   └── exploratory_eda.ipynb # EDA, feature engineering, and model training
-├── src/
-│   ├── __init__.py
-│   ├── config.py             # Feature configurations and threshold values
-│   ├── preprocessing.py      # Input transformation and payload validation
-│   ├── rules.py              # Statutory rule-checking algorithms
-│   └── predictor.py          # Unified inference pipeline
-├── app.py                    # FastAPI application server
-├── requirements.txt          # Python dependencies
-└── README.md
+[ Applicant Data & Checklist ]
+         │
+         ▼
+[ Feature Extraction & Preprocessing ]
+   ├── Categorical Encoding
+   ├── Missing Value Handling (dropna/imputation)
+   └── Standard Feature Scaling
+         │
+         ▼
+[ Regression & Risk Estimation Model ]
+   ├── Target: Continuous Evaluation Index (G3/Risk Index)
+   ├── Loss Optimization: MSE / MAE Minimization
+   └── Coefficient Analysis (Factor Impact)
+         │
+         ▼
+[ Risk Calibration & Diagnostics ]
+   ├── ⚠️ Risk Level: HIGH / MEDIUM / LOW
+   ├── 📊 Risk Score: 82%
+   └── 🔍 Error Breakdown & Remediation Action Items
+
+{
+  "applicant_id": "CAND-2026-9041",
+  "exam_target": "XYZ Recruitment Exam",
+  "demographics": {
+    "age": 19,
+    "qualification": "12th Standard",
+    "category": "OBC",
+    "domicile_state": "Himachal Pradesh"
+  },
+  "document_verification": {
+    "identity_proof": true,
+    "academic_marksheet": true,
+    "category_certificate": false
+  },
+  "media_compliance": {
+    "photograph_valid_format": false,
+    "signature_valid_format": true
+  }
+}
+
+══════════════════════════════════════════════════════════════════════
+                   PRE-SUBMISSION FORM AUDIT REPORT
+══════════════════════════════════════════════════════════════════════
+ ⚠️  RISK LEVEL : HIGH
+ 📊  RISK SCORE : 82%  [████████████████░░░░]
+──────────────────────────────────────────────────────────────────────
+ CRITICAL ERRORS & COMPLIANCE WARNINGS
+──────────────────────────────────────────────────────────────────────
+ [ 1 ] Required Certificate Missing: Category declared as 'OBC', but 
+       supporting reservation certificate is marked FALSE/UNATTACHED.
+ [ 2 ] Educational Qualification Verification: Candidate qualification 
+       status requires verification against the specific minimum cutoff 
+       criteria of the target recruitment.
+ [ 3 ] Media Specifications Non-Compliant: Uploaded candidate photograph 
+       does not adhere to portal dimension and DPI parameters.
+──────────────────────────────────────────────────────────────────────
+ RECOMMENDED ACTION PLAN
+──────────────────────────────────────────────────────────────────────
+ ✔ Attach a valid Central/State OBC certificate issued prior to cutoff.
+ ✔ Re-upload photograph conforming to standard portal specs (20KB–50KB).
+══════════════════════════════════════════════════════════════════════
+
+# Clone repository
+git clone [https://github.com/sanchit-Thakur/ML-PROJECT.git](https://github.com/sanchit-Thakur/ML-PROJECT.git)
+cd ML-PROJECT
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run notebook
+jupyter notebook
