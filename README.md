@@ -1,48 +1,46 @@
 # 🛡️ AI Government & Exam Form Error Predictor
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-Learn" />
-  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas" />
-  <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy" />
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge" alt="Status" />
-</p>
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
+[![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org)
+[![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-<p align="center">
-  <b>Pre-submission risk scoring & anomaly detection engine designed to prevent government application and entrance exam registration rejections.</b>
-</p>
+An intelligent pre-submission risk assessment and anomaly detection engine designed to prevent candidate disqualifications and registration rejections across competitive examinations and government recruitments (e.g., SSC, UPSC, State PSCs, JEE, NEET).
 
 ---
 
 ## 📌 Executive Summary
 
-Every year, thousands of job applicants and students face automatic rejection during competitive exams (SSC, UPSC, State PSCs, JEE, NEET) due to avoidable clerical mistakes:
+Every year, millions of applicants register for competitive exams and public sector recruitments. A significant percentage face outright rejection or cancellation during scrutiny and Document Verification (DV) due to clerical errors and oversight:
 
-| Error Type | Common Mistake | Real-World Impact |
+| Error Category | Common Mistake | Direct Impact |
 | :--- | :--- | :--- |
-| **Missing Certificates** | Forgetting OBC-NCL, EWS, or Domicile proofs | Loss of reservation benefits or immediate cancellation |
-| **Eligibility Mismatch** | Underage/overage by cutoff date or wrong degree stream | Disqualification during scrutiny |
-| **Media Non-Compliance** | Photo/signature violating dimension, DPI, or size rules | Automated rejection by upload gates |
-| **Profile Inconsistencies** | Qualification marks, board roll numbers, or state mismatches | Document verification (DV) failure |
+| **Missing Certificates** | Omitting OBC-NCL, EWS, PwD, or State Domicile proofs | Loss of reservation quota or immediate cancellation |
+| **Eligibility Mismatch** | Age outside criteria on cutoff date, invalid degree/stream | Scrutiny failure before admit card release |
+| **Media Non-Compliance** | Photo/signature defying aspect ratio, file size, or DPI limits | Rejection by automated upload gates |
+| **Data Inconsistencies** | Name discrepancies across matriculation records vs. ID | Disqualification during final document verification |
 
-This system acts as a **smart pre-flight check**: applicants submit their profile metadata, and an ML-powered inference engine flags errors, estimates rejection probability, and delivers clear remediation steps before final payment and submission.
+This tool functions as a **smart pre-flight checker**: applicants input their profile details, and the hybrid machine learning and rule-based pipeline evaluates inconsistencies, scores rejection probability, and provides actionable remediation steps before final submission.
 
 ---
 
-## 💡 How It Works
+## 💡 System Architecture
+
+```text
 ┌──────────────────────────┐
 │  Applicant Form Payload  │
 │  (Age, Category, Docs)   │
 └────────────┬─────────────┘
-│
-▼
+             │
+             ▼
 ┌──────────────────────────┐
 │ Feature Vectorization &  │
 │ Categorical Encoding     │
 └────────────┬─────────────┘
-│
-▼
+             │
+             ▼
 ┌────────────────────────────────────────────────────────┐
 │               Hybrid Inference Pipeline                │
 │ ┌────────────────────────┐  ┌────────────────────────┐ │
@@ -50,15 +48,32 @@ This system acts as a **smart pre-flight check**: applicants submit their profil
 │ │  (Eligibility Criteria)│  │   (Risk Probability)   │ │
 │ └───────────┬────────────┘  └───────────┬────────────┘ │
 └─────────────┼───────────────────────────┼──────────────┘
-│                           │
-└─────────────┬─────────────┘
-│
-▼
-┌───────────────────────────┐
-│     Diagnostic Report     │
-│   • Risk Tier (High/Med)  │
-│   • Calibrated Score (%)  │
-│   • Specific Error List   │
-└───────────────────────────┘
+              │                           │
+              └─────────────┬─────────────┘
+                            │
+                            ▼
+              ┌───────────────────────────┐
+              │     Diagnostic Report     │
+              │   • Risk Tier (High/Med)  │
+              │   • Calibrated Score (%)  │
+              │   • Actionable Fixes      │
+              └───────────────────────────┘
 
-
+ML-PROJECT/
+├── data/
+│   ├── raw/                  # Raw simulated form submissions
+│   └── processed/            # Cleaned, vectorized training data
+├── models/
+│   ├── model.pkl             # Serialized inference model
+│   └── preprocessor.pkl      # Column transformers and encoders
+├── notebooks/
+│   └── exploratory_eda.ipynb # EDA, feature engineering, and model training
+├── src/
+│   ├── __init__.py
+│   ├── config.py             # Feature configurations and threshold values
+│   ├── preprocessing.py      # Input transformation and payload validation
+│   ├── rules.py              # Statutory rule-checking algorithms
+│   └── predictor.py          # Unified inference pipeline
+├── app.py                    # FastAPI application server
+├── requirements.txt          # Python dependencies
+└── README.md
