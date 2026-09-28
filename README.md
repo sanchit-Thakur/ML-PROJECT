@@ -9,7 +9,7 @@
 
 *A proactive Machine Learning pre-flight check engine that detects application discrepancies, predicts rejection risk, and flags compliance issues before final exam/job portal submission.*
 
----
+--
 
 
 ## 📌 Problem Overview
