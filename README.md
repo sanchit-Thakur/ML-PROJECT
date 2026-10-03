@@ -1,4 +1,4 @@
-# 🛡️ AI Government & Exam Form Error Predictor
+# 🛡️ Exam Form Error Predictor
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Colab](https://img.shields.io/badge/Jupyter-Colab-orange.svg)](https://colab.research.google.com/)
